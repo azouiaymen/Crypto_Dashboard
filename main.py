@@ -16,18 +16,13 @@ engine = create_engine('sqlite:///CryptolIVE.DB')
 
 from sqlalchemy import inspect
 inspector = inspect(engine)
+# inspector.get_table_names()
 
 
 # In[58]:
 
 
 st.title('Welcome to Basic Crypto dashboard')
-
-
-# In[4]:
-
-
-inspector.get_table_names()
 
 
 # In[5]:
@@ -55,10 +50,10 @@ def query_symb(symbol, lookback):
     return df
 
 
-# In[29]:
+# In[60]:
 
 
-query_symb('ethusdt',1)
+# query_symb('ethusdt',1)
 
 
 # In[30]:
@@ -99,44 +94,18 @@ if st.button('Update'):
 all_return = pd.DataFrame(all_returned(),index=symbols,columns=['CHANGE'])
 
 
-# In[42]:
-
-
-all_return
-
-
 # In[53]:
 
 
 top = all_return.CHANGE.nlargest(10)
-
-
-# In[59]:
-
-
-st.write(top)
-
-
-# In[54]:
-
-
-top
-
-
-# In[51]:
-
-
 bottom = all_return.CHANGE.nsmallest(10)
 
+cols = st.columns(2)
 
-# In[ ]:
-
-
-st.write(bottom)
-
-
-# In[52]:
-
-
-bottom 
+cols[0].title('Top Performers')
+cols[0].dataframe(top)
+cols[1].title('Worst Performers')
+cols[1].dataframe(bottom)
+# st.write(top)
+# st.write(bottom)
 
